@@ -740,8 +740,11 @@ a {
     display: none;
   }
 
+  .table td:last-child {
+    padding-top: 10px;
+  }
+
   .table__actions {
     justify-content: flex-start;
-    padding-top: 10px !important;
   }
 }

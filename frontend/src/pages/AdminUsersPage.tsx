@@ -133,31 +133,33 @@ export function AdminUsersPage() {
                       )}
                     </td>
                     <td data-label="Registered">{formatDate(user.createdAt)}</td>
-                    <td className="table__actions">
-                      {isSelf ? (
-                        <span className="muted">That's you</span>
-                      ) : (
-                        <>
-                          <button
-                            type="button"
-                            className="btn btn--ghost btn--small"
-                            disabled={busy}
-                            onClick={() =>
-                              dispatch(setUserEnabled({ id: user.id, enabled: !user.enabled }))
-                            }
-                          >
-                            {user.enabled ? 'Deactivate' : 'Activate'}
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn--danger-ghost btn--small"
-                            disabled={busy}
-                            onClick={() => setUserToDelete(user)}
-                          >
-                            Delete
-                          </button>
-                        </>
-                      )}
+                    <td>
+                      <div className="table__actions">
+                        {isSelf ? (
+                          <span className="muted">That's you</span>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className="btn btn--ghost btn--small"
+                              disabled={busy}
+                              onClick={() =>
+                                dispatch(setUserEnabled({ id: user.id, enabled: !user.enabled }))
+                              }
+                            >
+                              {user.enabled ? 'Deactivate' : 'Activate'}
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn--danger-ghost btn--small"
+                              disabled={busy}
+                              onClick={() => setUserToDelete(user)}
+                            >
+                              Delete
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );

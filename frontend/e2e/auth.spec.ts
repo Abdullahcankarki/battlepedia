@@ -76,7 +76,7 @@ test('admin can find and deactivate a user, who can no longer sign in', async ({
   await registerAndConfirm(page, username, email);
 
   await signIn(page, ADMIN_EMAIL, ADMIN_PASSWORD);
-  await page.getByRole('link', { name: 'Users' }).click();
+  await page.getByRole('link', { name: 'Users', exact: true }).click();
   await page.getByLabel('Search users').fill(username);
   const row = page.getByRole('row', { name: new RegExp(username) });
   await expect(row).toBeVisible();
@@ -92,7 +92,8 @@ test('normal users are kept out of the user management', async ({ page }) => {
   const username = `saladin${Date.now()}`;
   await registerAndConfirm(page, username, `${username}@example.com`);
   await signIn(page, `${username}@example.com`, PASSWORD);
-  await expect(page.getByRole('link', { name: 'Users' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /Welcome back, / })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Users', exact: true })).toHaveCount(0);
   await page.goto('/admin/users');
   await expect(page).toHaveURL(/\/$/);
   const status = await page.evaluate(async () => (await fetch('/api/admin/users')).status);
