@@ -21,7 +21,7 @@ jobs:
           java-version: "17"
           cache: maven
       - name: Build, Tests und PMD-Prüfung
-        run: mvn -B verify
+        run: ./mvnw -B verify
       - name: Testbericht hochladen
         if: always()
         uses: actions/upload-artifact@v4
@@ -102,7 +102,7 @@ jobs:
       - name: Backend bauen und mit HTTPS starten
         working-directory: backend
         run: |
-          mvn -B -q -DskipTests package
+          ./mvnw -B -q -DskipTests package
           ./scripts/create-dev-certificate.sh "$SSL_KEYSTORE_PASSWORD"
           nohup java -jar target/battlepedia-0.1.0.jar > backend.log 2>&1 &
           for i in $(seq 1 60); do
