@@ -1,0 +1,20 @@
+# Geheimnisse und lokale Konfiguration
+.env
+*.env.local
+backend/certs/
+
+# Backend (Maven)
+backend/target/
+
+# Frontend (Node)
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+
+# IDEs und System
+.idea/
+.vscode/
+*.iml
+.DS_Store

@@ -1,0 +1,16 @@
+# Startet die PostgreSQL-Datenbank für die lokale Entwicklung: docker compose up -d
+# Das Passwort kommt aus der Umgebungsvariable DB_PASSWORD (z. B. aus backend/.env).
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: battlepedia
+      POSTGRES_USER: battlepedia
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Bitte DB_PASSWORD setzen}
+    ports:
+      - "5432:5432"
+    volumes:
+      - battlepedia-data:/var/lib/postgresql/data
+
+volumes:
+  battlepedia-data:

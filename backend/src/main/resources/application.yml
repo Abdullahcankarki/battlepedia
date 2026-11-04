@@ -1,0 +1,42 @@
+# Alle Werte, die vom Deployment abhängen oder geheim sind, kommen aus Umgebungsvariablen.
+# Für die lokale Entwicklung können sie in der Datei backend/.env stehen (siehe .env.example).
+spring:
+  application:
+    name: battlepedia
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/battlepedia}
+    username: ${DB_USERNAME:battlepedia}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  mail:
+    host: ${MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+
+server:
+  port: ${SERVER_PORT:8443}
+  ssl:
+    enabled: ${SSL_ENABLED:true}
+    key-store: ${SSL_KEYSTORE:file:certs/keystore.p12}
+    key-store-password: ${SSL_KEYSTORE_PASSWORD:}
+    key-store-type: PKCS12
+
+app:
+  frontend-url: ${FRONTEND_URL:https://localhost:5173}
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
+  cookie:
+    secure: ${COOKIE_SECURE:true}
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:no-reply@battlepedia.app}
+  admin:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}

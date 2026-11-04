@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:battlepedia;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  ssl:
+    enabled: false
+
+app:
+  frontend-url: https://localhost:5173
+  jwt:
+    secret: test-secret-only-for-automated-tests-0123456789
+    expiration-minutes: 60
+  cookie:
+    secure: true
+  mail:
+    enabled: false
+  admin:
+    email: admin@battlepedia.test
+    password: Admin-Passw0rd!
