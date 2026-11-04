@@ -17,6 +17,12 @@ public class ApiException extends RuntimeException {
         this.status = status;
     }
 
+    /** Variante mit Ursache, damit der ursprüngliche Fehler im Log erhalten bleibt. */
+    public ApiException(HttpStatus status, String message, Throwable cause) {
+        super(message, cause);
+        this.status = status;
+    }
+
     public HttpStatus getStatus() {
         return status;
     }

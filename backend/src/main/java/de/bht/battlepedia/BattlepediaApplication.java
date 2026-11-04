@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  */
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@SuppressWarnings("PMD.UseUtilityClass") // Spring Boot muss die Klasse instanziieren können
 public class BattlepediaApplication {
 
     public static void main(String[] args) {

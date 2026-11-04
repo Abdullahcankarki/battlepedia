@@ -47,7 +47,7 @@ public class MailService {
         } catch (MailException ex) {
             LOG.error("Verifikations-E-Mail an {} konnte nicht gesendet werden", user.getEmail(), ex);
             throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "The confirmation email could not be sent. Please try again later.");
+                    "The confirmation email could not be sent. Please try again later.", ex);
         }
     }
 }

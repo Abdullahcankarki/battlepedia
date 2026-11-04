@@ -5,5 +5,9 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD-Regeln für das Battlepedia-Backend (Basis: PMD-Quickstart)</description>
 
-    <rule ref="rulesets/java/quickstart.xml"/>
+    <rule ref="rulesets/java/quickstart.xml">
+        <!-- SLF4J setzt Werte über {}-Platzhalter erst ein, wenn geloggt wird. Zusätzliche
+             if (LOG.isInfoEnabled())-Abfragen würden den Code nur unübersichtlicher machen. -->
+        <exclude name="GuardLogStatement"/>
+    </rule>
 </ruleset>

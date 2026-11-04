@@ -53,6 +53,7 @@ public class User {
 
     /** Leerer Konstruktor, wird von JPA benötigt. */
     protected User() {
+        // JPA erzeugt Objekte über diesen Konstruktor und füllt die Felder danach selbst
     }
 
     public User(String username, String email, String passwordHash) {
