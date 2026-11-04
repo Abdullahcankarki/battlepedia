@@ -28,7 +28,7 @@ Interaktive Enzyklopädie historischer Schlachten – Projekt im Modul Enterpris
 
 - Java 17 oder neuer (`java -version`)
 - Node.js 20 oder neuer (`node -v`)
-- Docker Desktop für die Datenbank (alternativ eine lokal installierte PostgreSQL)
+- Optional: Docker Desktop oder eine lokal installierte PostgreSQL (nur für Variante B)
 
 ## Starten (lokale Entwicklung)
 
@@ -38,25 +38,36 @@ Interaktive Enzyklopädie historischer Schlachten – Projekt im Modul Enterpris
 cp backend/.env.example backend/.env
 ```
 
-Danach in `backend/.env` eigene Werte eintragen, vor allem `DB_PASSWORD`, `JWT_SECRET`
+Danach in `backend/.env` eigene Werte eintragen, vor allem `JWT_SECRET`
 (z. B. mit `openssl rand -base64 48` erzeugen), `SSL_KEYSTORE_PASSWORD` und `ADMIN_PASSWORD`.
 Die Datei `.env` wird nicht eingecheckt.
 
-**2. Datenbank starten**
-
-```bash
-docker compose --env-file backend/.env up -d
-```
-
-**3. HTTPS-Zertifikat erzeugen und Backend starten**
+**2. HTTPS-Zertifikat erzeugen** (einmalig, `keytool` ist Teil von Java)
 
 ```bash
 cd backend
 ./scripts/create-dev-certificate.sh <SSL_KEYSTORE_PASSWORD aus der .env>
+```
+
+**3. Backend starten** – eine der beiden Varianten:
+
+*Variante A – ohne Docker (eingebaute H2-Datenbank):*
+
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+Die Daten liegen dann in `backend/data/` und bleiben nach einem Neustart erhalten.
+`DB_URL`, `DB_USERNAME` und `DB_PASSWORD` werden in dieser Variante nicht benötigt.
+
+*Variante B – mit PostgreSQL (wie im Projektkonzept vorgesehen):*
+
+```bash
+docker compose --env-file .env -f ../docker-compose.yml up -d
 ./mvnw spring-boot:run
 ```
 
-Das Backend läuft dann unter `https://localhost:8443`. Beim ersten Start wird der Administrator aus
+Das Backend läuft unter `https://localhost:8443`. Beim ersten Start wird der Administrator aus
 `ADMIN_EMAIL`/`ADMIN_PASSWORD` angelegt.
 
 **4. Frontend starten** (zweites Terminal)

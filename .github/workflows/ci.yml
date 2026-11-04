@@ -22,6 +22,25 @@ jobs:
           cache: maven
       - name: Build, Tests und PMD-Prüfung
         run: ./mvnw -B verify
+      - name: Start ohne Docker prüfen (Profil local mit H2)
+        env:
+          JWT_SECRET: ci-only-secret-that-is-long-enough-1234567890
+          SSL_ENABLED: "false"
+          SERVER_PORT: "8080"
+          COOKIE_SECURE: "false"
+          ADMIN_EMAIL: admin@battlepedia.local
+          ADMIN_PASSWORD: Admin-Passw0rd!
+        run: |
+          nohup java -jar target/battlepedia-0.1.0.jar --spring.profiles.active=local > local.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -s -o /dev/null http://localhost:8080/api/auth/me; then break; fi
+            sleep 2
+          done
+          curl -s -c cookies.txt -u "$ADMIN_EMAIL:$ADMIN_PASSWORD" -X POST http://localhost:8080/api/auth/login
+          echo
+          test "$(curl -s -o /dev/null -w '%{http_code}' -b cookies.txt http://localhost:8080/api/auth/me)" = "200" \
+            || { cat local.log; exit 1; }
+          echo "Start mit Profil local funktioniert"
       - name: Testbericht hochladen
         if: always()
         uses: actions/upload-artifact@v4

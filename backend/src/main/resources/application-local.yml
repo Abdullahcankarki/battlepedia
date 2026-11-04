@@ -1,0 +1,8 @@
+# Profil "local": Start ohne Docker und ohne PostgreSQL.
+# Die Daten liegen in der Datei backend/data/battlepedia.mv.db und bleiben nach einem Neustart erhalten.
+# Start: ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/battlepedia
+    username: sa
+    password: ""
