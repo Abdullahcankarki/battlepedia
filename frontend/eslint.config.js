@@ -24,6 +24,9 @@ export default tseslint.config(
       'no-console': 'error',
       eqeqeq: 'error',
       '@typescript-eslint/no-explicit-any': 'error',
+      // void als Typargument wird von Redux Toolkit (Thunks ohne Parameter) und für
+      // Antworten ohne Inhalt (request<void>) benötigt.
+      '@typescript-eslint/no-invalid-void-type': 'off',
     },
   },
 );
